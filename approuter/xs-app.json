@@ -1,0 +1,11 @@
+{
+	"authenticationMethod": "route",
+    "routes": [
+        {
+            "source": "^/shipment-service(.*)$",
+            "target": "$1",
+            "destination": "dest-shipment-service",
+            "authenticationType":"xsuaa"
+        }
+    ]
+}

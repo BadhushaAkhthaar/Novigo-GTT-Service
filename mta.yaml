@@ -1,0 +1,22 @@
+---
+_schema-version: '3.1'
+ID: gtt-v2-xl-shipment-service
+version: 1.0.0
+modules:
+- name: gtt-xl-shipment-service
+  type: java
+  path: src/
+  parameters:
+    buildpack: java_buildpack
+    health-check-timeout: 180
+    route: gtt-shipment-xl-service.cfapps.eu10.hana.ondemand.com
+  build-parameters:
+    ignore:
+    - "*.md"
+    build-result: target/shipment-gtt-0.0.1-SNAPSHOT.jar
+    timeout: 10m
+  requires:
+  - name: lbn-gtt-sample-app-uaa
+resources:
+- name: lbn-gtt-sample-app-uaa
+  type: org.cloudfoundry.existing-service
