@@ -1,5 +1,7 @@
 package com.novigo.app.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.novigo.app.dto.ApplicationsDto;
 import com.novigo.app.helpers.ExcelHelper;
 import com.novigo.app.message.ResponseMessage;
 import com.novigo.app.service.FileUploadService;
@@ -28,8 +31,8 @@ public class Controller {
 			try {
 				message = multipartFile.getOriginalFilename();
 //				service.upload(multipartFile);
-				service.upload(multipartFile);
-				return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+				List<ApplicationsDto> applications = service.upload(multipartFile);
+				return ResponseEntity.status(HttpStatus.OK).body(applications);
 			} catch (Exception e) {
 				// TODO: handle exception
 				return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(new ResponseMessage(e.getMessage()));

@@ -35,7 +35,7 @@ public class ExcelHelper {
 		return true;
 	}
 
-	public static String excelToJson(InputStream is) {
+	public static List<ApplicationsDto> excelToJson(InputStream is) {
 		int numberOfSheets;
 		int rowCount;
 		String message = "";
@@ -67,7 +67,7 @@ public class ExcelHelper {
 					break;
 				}
 			}
-			return message;
+			return applications;
 		} catch (Exception e) {
 			throw new RuntimeException("fail to parse Excel file: " + e.getMessage());
 		}
@@ -116,6 +116,7 @@ public class ExcelHelper {
 			Row currentRow = rows.next(); // Getting instance of current row
 			ParametersDto parameters = new ParametersDto();
 			List<ParametersDto> tempParamsList = new ArrayList<>();
+			List<ParametersDto> existingParamsList = new ArrayList<>();
 			Iterator<Cell> cells = currentRow.iterator(); // Getting inners cells of the current row
 			int cellIndex = 0;
 
@@ -143,8 +144,15 @@ public class ExcelHelper {
 				cellIndex = cellIndex + 1;
 			}
 			// Update the global Application object with updated one....
-			tempParamsList.add(parameters);
-			updatedApplication.setPARAMS(tempParamsList);
+			
+			existingParamsList = updatedApplication.getPARAMS();
+			if(existingParamsList == null) {
+				tempParamsList.add(parameters);
+				updatedApplication.setPARAMS(tempParamsList);
+			}
+			else {
+				existingParamsList.add(parameters);
+			}
 			String check = tempF();
 		}
 	}
@@ -168,7 +176,5 @@ public class ExcelHelper {
 		} catch (Exception e) {
 			throw new RuntimeException("fail to parse Excel file: " + e.getMessage());
 		}
-		
-		
 	}
 }
