@@ -11,12 +11,13 @@ public class ApplicationsDto {
 	private List<ParametersDto> PARAMS;
 	private List<PlannedEventsDto> PLANNEDEVENTS;
 	private List<TrackingIdDto> TRACKINGID;
+	private List<StopsDto> STOPS;
 	public ApplicationsDto() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	public ApplicationsDto(String aPPSYS, String aPPOBJTYPE, String aPPOBJID, List<ParametersDto> pARAMS,
-			List<PlannedEventsDto> pLANNEDEVENTS, List<TrackingIdDto> tRACKINGID) {
+			List<PlannedEventsDto> pLANNEDEVENTS, List<TrackingIdDto> tRACKINGID,List<StopsDto> sTOPS) {
 		super();
 		APPSYS = aPPSYS;
 		APPOBJTYPE = aPPOBJTYPE;
@@ -24,6 +25,7 @@ public class ApplicationsDto {
 		PARAMS = pARAMS;
 		PLANNEDEVENTS = pLANNEDEVENTS;
 		TRACKINGID = tRACKINGID;
+		STOPS = sTOPS;
 	}
 	public String getAPPSYS() {
 		return APPSYS;
@@ -60,6 +62,14 @@ public class ApplicationsDto {
 	}
 	public void setTRACKINGID(List<TrackingIdDto> tRACKINGID) {
 		TRACKINGID = tRACKINGID;
+	}
+	
+	
+	public List<StopsDto> getSTOPS() {
+		return STOPS;
+	}
+	public void setSTOPS(List<StopsDto> sTOPS) {
+		STOPS = sTOPS;
 	}
 	@Override
 	public String toString() {
