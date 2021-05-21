@@ -1,5 +1,8 @@
 package com.novigo.app.service;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +27,15 @@ public class FileUploadService {
 				
 				allApplicationObjects.forEach((applicationObject)->{
 					try {
-						ExcelHelper.jsonToXML(applicationObject);
+						ByteArrayOutputStream soapXmlByteArray = ExcelHelper.jsonToXML(applicationObject);
+						String soapXmlString;
+						try {
+							soapXmlString = new String(soapXmlByteArray.toByteArray(), "utf-8");
+//							GTTService.PostSOAP(soapXmlString);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					} catch (SOAPException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

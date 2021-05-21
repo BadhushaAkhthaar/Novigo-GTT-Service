@@ -1,0 +1,34 @@
+<SOAP-ENV:Envelope
+	xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+	<SOAP-ENV:Header />
+	<SOAP-ENV:Body>
+		<GTTMSG01 xmlns="urn:sap-com:document:sap:idoc:soap:messages">
+			<IDOC BEGIN="1">
+				<EDI_DC40 SEGMENT="1">
+					<RCVPRN>SAPGTT</RCVPRN>
+					<DOCREL>754</DOCREL>
+					<SNDPRT>LS</SNDPRT>
+					<SNDPOR>SAPXLS</SNDPOR>
+					<MESTYP>GTTMSG</MESTYP>
+					<RCVPRT>LS</RCVPRT>
+					<RCVPOR>GTT_TPEV</RCVPOR>
+					<DOCNUM>0000000000010000</DOCNUM>
+					<SNDPRN>[APPLICATION-APPSYS]</SNDPRN>
+					<TABNAM>EDI_DC40</TABNAM>
+					<OUTMOD>2</OUTMOD>
+					<MANDT>100</MANDT>
+					<STATUS>30</STATUS>
+					<IDOCTYP>GTTMSG01</IDOCTYP>
+					<CREDAT>[Current Date]</CREDAT>
+					<CRETIM>[Current Time]</CRETIM>
+					<DIRECT>1</DIRECT>
+				</EDI_DC40>
+				<E1EHPAO SEGMENT="1">
+					<APPSYS>XLSCLNT100</APPSYS>
+					<APPOBJTYPE>ZGTT_SHP_ACC_HD</APPOBJTYPE>
+					<APPOBJID>0000009993</APPOBJID>
+				</E1EHPAO>
+			</IDOC>
+		</GTTMSG01>
+	</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

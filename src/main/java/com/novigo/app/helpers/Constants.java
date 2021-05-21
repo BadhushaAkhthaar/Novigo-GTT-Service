@@ -20,12 +20,13 @@ public class Constants {
 		dc40Elems.put("MESTYP", "GTTMSG");
 		dc40Elems.put("SNDPOR", "SAPXLS");
 		dc40Elems.put("SNDPRT", "LS");
-		dc40Elems.put("SNDPRN", "[APPLICATION-APPSYS]");
+		dc40Elems.put("SNDPRN", "S4BCLNT100");
 		dc40Elems.put("RCVPOR", "GTT_TPEV");
 		dc40Elems.put("RCVPRT", "LS");
 		dc40Elems.put("RCVPRN", "SAPGTT");
-		dc40Elems.put("CREDAT", "[Current Date]");
-		dc40Elems.put("CRETIM", "[Current Time]");
+		dc40Elems.put("CREDAT", "20210517");
+		dc40Elems.put("CRETIM", "100002");
+		dc40Elems.put("SERIAL", "20210517100002");
 
 		return dc40Elems;
 

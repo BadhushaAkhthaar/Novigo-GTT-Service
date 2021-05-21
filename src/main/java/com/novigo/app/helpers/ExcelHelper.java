@@ -1,7 +1,9 @@
 package com.novigo.app.helpers;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -36,6 +38,7 @@ import org.w3c.dom.TypeInfo;
 import org.w3c.dom.UserDataHandler;
 
 import com.novigo.app.dto.*;
+import com.novigo.app.exceptions.ExcelEmptyCellException;
 
 public class ExcelHelper {
 	public static String TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
@@ -117,18 +120,47 @@ public class ExcelHelper {
 
 				switch (cellIndex) {
 				case 0: // Application System
-					application.setAPPSYS(currentCell.getStringCellValue());
+					try {
+						if(currentCell.getStringCellValue() == "") {
+							throw new ExcelEmptyCellException("Cell is empty");
+						}
+						application.setAPPSYS(currentCell.getStringCellValue());
+					} catch (ExcelEmptyCellException e) {
+						// TODO Auto-generated catch block
+						application = null;
+						e.printStackTrace();
+					}
 					break;
 				case 1: // Application Object Type
-					application.setAPPOBJTYPE(currentCell.getStringCellValue());
+					try {
+						if(currentCell.getStringCellValue() == "") {
+							throw new ExcelEmptyCellException("Cell is empty");
+						}
+						application.setAPPOBJTYPE(currentCell.getStringCellValue());
+					} catch (ExcelEmptyCellException e) {
+						// TODO Auto-generated catch block
+						application = null;
+						e.printStackTrace();
+					}
 					break;
 				case 2: // Application Object ID
-					application.setAPPOBJID(currentCell.getStringCellValue());
+					try {
+						if(currentCell.getStringCellValue() == "") {
+							throw new ExcelEmptyCellException("Cell is empty");
+						}
+						application.setAPPOBJID(currentCell.getStringCellValue());
+					} catch (ExcelEmptyCellException e) {
+						// TODO Auto-generated catch block
+						application = null;
+						e.printStackTrace();
+					}
 					break;
 				}
 				cellIndex = cellIndex + 1;
 			}
-			applications.add(application);
+			if(application != null) {
+				applications.add(application);
+			}
 		}
 	}
 
@@ -355,7 +387,7 @@ public class ExcelHelper {
 		}
 	}
 
-	public static SOAPMessage jsonToXML(ApplicationsDto applicationJson) throws SOAPException {
+	public static ByteArrayOutputStream jsonToXML(ApplicationsDto applicationJson) throws SOAPException {
 
 		HashMap<String, String> edi_dc40Elems = new HashMap<String, String>();
 		edi_dc40Elems = Constants.getDC40ElemCnst();
@@ -520,11 +552,14 @@ public class ExcelHelper {
 			});
 
 			soapMessage.saveChanges();
-			FileOutputStream file = new FileOutputStream(applicationJson.getAPPOBJID() + ".xml");
-			soapMessage.writeTo(file);
-			file.close();
+			
+			ByteArrayOutputStream stream = new ByteArrayOutputStream();
+			soapMessage.writeTo(stream);
+//			FileOutputStream file = new FileOutputStream(applicationJson.getAPPOBJID() + ".xml");
+//			soapMessage.writeTo(file);
+//			file.close();
 			System.out.println();
-			return soapMessage;
+			return stream;
 		} catch (Exception e) {
 			throw new RuntimeException("Message Factory Error: " + e.getMessage());
 		}

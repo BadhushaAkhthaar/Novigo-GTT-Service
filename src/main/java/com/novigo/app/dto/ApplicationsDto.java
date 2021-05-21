@@ -2,6 +2,8 @@ package com.novigo.app.dto;
 
 import java.util.List;
 
+import com.novigo.app.exceptions.ExcelEmptyCellException;
+
 public class ApplicationsDto {
 	private static final long serialVersionUID = 1L;
 	
@@ -30,19 +32,19 @@ public class ApplicationsDto {
 	public String getAPPSYS() {
 		return APPSYS;
 	}
-	public void setAPPSYS(String aPPSYS) {
+	public void setAPPSYS(String aPPSYS) throws ExcelEmptyCellException{
 		APPSYS = aPPSYS;
 	}
 	public String getAPPOBJTYPE() {
 		return APPOBJTYPE;
 	}
-	public void setAPPOBJTYPE(String aPPOBJTYPE) {
+	public void setAPPOBJTYPE(String aPPOBJTYPE) throws ExcelEmptyCellException {
 		APPOBJTYPE = aPPOBJTYPE;
 	}
 	public String getAPPOBJID() {
 		return APPOBJID;
 	}
-	public void setAPPOBJID(String aPPOBJID) {
+	public void setAPPOBJID(String aPPOBJID) throws ExcelEmptyCellException {
 		APPOBJID = aPPOBJID;
 	}
 	public List<ParametersDto> getPARAMS() {
