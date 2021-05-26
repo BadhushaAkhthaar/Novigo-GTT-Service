@@ -15,10 +15,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.novigo.app.dto.ApplicationsDto;
 import com.novigo.app.helpers.ExcelHelper;
+import com.novigo.app.helpers.GTTResponseHelper;
+import com.novigo.app.message.GTTResponse;
 
 @Service
 public class FileUploadService {
-	public List<ApplicationsDto> upload(MultipartFile file) {
+	public List<GTTResponse> upload(MultipartFile file) {
 		List<ApplicationsDto> allApplicationObjects = new ArrayList<>();
 		try {
 			allApplicationObjects = ExcelHelper.excelToJson(file.getInputStream());
@@ -31,7 +33,7 @@ public class FileUploadService {
 						String soapXmlString;
 						try {
 							soapXmlString = new String(soapXmlByteArray.toByteArray(), "utf-8");
-//							GTTService.PostSOAP(soapXmlString);
+							GTTService.PostSOAP(soapXmlString,applicationObject.getAPPOBJID());
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -45,8 +47,9 @@ public class FileUploadService {
 			
 			
 			//Temp Return Statement
-			List<ApplicationsDto> temp = new ArrayList<>();
-			return temp;
+			
+			GTTResponseHelper messageHelper = new GTTResponseHelper();
+			return messageHelper.getMessages();
 			//Need to be removed
 		} catch (Exception e) {
 			throw new RuntimeException("fail to store excel data: " + e.getMessage());

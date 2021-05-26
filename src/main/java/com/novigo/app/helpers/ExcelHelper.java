@@ -49,7 +49,6 @@ public class ExcelHelper {
 	public static final String PARAMS = "PARAMS";
 	public static final String STOPS = "STOPS";
 	public static final String PLANNEDEVENTS = "PLANNEDEVENTS";
-
 	public static List<ApplicationsDto> applications = new ArrayList<>();
 
 	public static boolean isExcel(MultipartFile file) {
@@ -104,6 +103,7 @@ public class ExcelHelper {
 
 	public static void extractApplicationData(Workbook workBook) {
 		Sheet applicationSheet = workBook.getSheet(APPLICATION);
+		GTTResponseHelper messageHelper = new GTTResponseHelper();
 		Iterator<Row> rows = applicationSheet.iterator();
 		int rowCount = 0;
 		if (rows.hasNext())
@@ -128,6 +128,7 @@ public class ExcelHelper {
 					} catch (ExcelEmptyCellException e) {
 						// TODO Auto-generated catch block
 						application = null;
+						messageHelper.createMessage(e.getMessage(), "Application System");
 						e.printStackTrace();
 					}
 					break;
@@ -140,6 +141,7 @@ public class ExcelHelper {
 					} catch (ExcelEmptyCellException e) {
 						// TODO Auto-generated catch block
 						application = null;
+						messageHelper.createMessage(e.getMessage(), "Application Object");
 						e.printStackTrace();
 					}
 					break;
@@ -152,6 +154,7 @@ public class ExcelHelper {
 					} catch (ExcelEmptyCellException e) {
 						// TODO Auto-generated catch block
 						application = null;
+						messageHelper.createMessage(e.getMessage(), "Application Object ID");
 						e.printStackTrace();
 					}
 					break;

@@ -1,1 +1,34 @@
-<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:example="serverUri"><SOAP-ENV:Header/><SOAP-ENV:Body><example:VerifyEmail><example:email>mutantninja@gmail.com</example:email><example:LicenseKey>123</example:LicenseKey></example:VerifyEmail></SOAP-ENV:Body></SOAP-ENV:Envelope>
+//		Destination dest = DestinationAccessor.getDestination("Northwind");
+//		HttpDestination ashttp = dest.asHttp();
+//		URI uri = ashttp.getUri();
+//		
+//		final Logger logger = LoggerFactory.getLogger(GTTService.class);
+//		logger.debug("URI"+System.getenv("GTT_DESTINATION"));
+//		HttpClient client = HttpClient.newHttpClient();
+//		HttpRequest request = HttpRequest.newBuilder(
+//			       URI.create("https://novigolbn.gtt-flp-lbnplatform.cfapps.eu10.hana.ondemand.com/api/idoc/em/v1/TrackedProcessAndEvent"))
+//			   .header("Content-Type", "text/xml; charset=utf-8")
+//			   .header("Authorization","Basic bm92aWdvMTIzLmd0dEBnbWFpbC5jb206Tm92aWdvMTIzIQ==")
+//			   .POST(HttpRequest.BodyPublishers.ofString(xmlMessage))
+//			   .build();
+//		
+//		try {
+//			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+//			GTTResponseHelper messageHelper = new GTTResponseHelper();
+//			messageHelper.createMessage(response, appObjId);
+//			String hello = Check();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+		
+		
+		
+		
+		
+		
+		
