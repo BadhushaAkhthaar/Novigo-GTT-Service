@@ -22,6 +22,7 @@ import com.novigo.app.message.GTTResponse;
 public class FileUploadService {
 	public List<GTTResponse> upload(MultipartFile file) {
 		List<ApplicationsDto> allApplicationObjects = new ArrayList<>();
+		List<GTTResponse> responseMessages = new ArrayList<GTTResponse>();
 		try {
 			allApplicationObjects = ExcelHelper.excelToJson(file.getInputStream());
 			
@@ -33,7 +34,8 @@ public class FileUploadService {
 						String soapXmlString;
 						try {
 							soapXmlString = new String(soapXmlByteArray.toByteArray(), "utf-8");
-							GTTService.PostSOAP(soapXmlString,applicationObject.getAPPOBJID());
+							GTTResponse responseMessage = GTTService.PostSOAP(soapXmlString,applicationObject.getAPPOBJID());
+							responseMessages.add(responseMessage);
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -44,15 +46,16 @@ public class FileUploadService {
 					}
 				});
 			}
+			else {
+				GTTResponse responseMessage = new GTTResponse();
+				responseMessage.setResponseCode(500);
+				responseMessage.setMessage("No data found in excel !");
+				responseMessages.add(responseMessage);
+			}
 			
-			
-			//Temp Return Statement
-			
-			GTTResponseHelper messageHelper = new GTTResponseHelper();
-			return messageHelper.getMessages();
-			//Need to be removed
+			return responseMessages;
 		} catch (Exception e) {
-			throw new RuntimeException("fail to store excel data: " + e.getMessage());
+			throw new RuntimeException("Error occurred : Reason" + e.getMessage());
 		}
 	}
 }

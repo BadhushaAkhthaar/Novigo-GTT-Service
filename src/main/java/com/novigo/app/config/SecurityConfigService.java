@@ -14,7 +14,8 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import com.sap.cloud.security.xsuaa.XsuaaServiceConfiguration;
 import com.sap.cloud.security.xsuaa.extractor.IasXsuaaExchangeBroker;
 import com.sap.cloud.security.xsuaa.token.TokenAuthenticationConverter;
-
+import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.POST;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
@@ -25,20 +26,18 @@ public class SecurityConfigService extends WebSecurityConfigurerAdapter
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.cors().and().csrf().disable();
-//		http.sessionManagement()
-//			.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//			.and()
-////			.authorizeRequests()	
+//		http.cors().and().csrf().disable();
+		http.sessionManagement()
+			.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+			.and()
+			.authorizeRequests()	 
+			.antMatchers(GET,"/home").hasAuthority("Display")
 ////			.antMatchers("/*").authenticated()
-////			.antMatchers("/local/*").permitAll()
-////			.antMatchers("/home**").hasAuthority("Display")
-//			.anyRequest().permitAll()
-////			.and()
-////			.oauth2ResourceServer()
-////			.bearerTokenResolver(new IasXsuaaExchangeBroker(xsuaaServiceConfiguration))
-////			.jwt()
-////			.jwtAuthenticationConverter(getJwtAuthenticationConverter());
+			.antMatchers("/upload**").hasAuthority("Display")
+			.and()
+			.oauth2ResourceServer()
+			.jwt()
+			.jwtAuthenticationConverter(getJwtAuthenticationConverter());
 	}
 	Converter<Jwt, AbstractAuthenticationToken> getJwtAuthenticationConverter(){
 		TokenAuthenticationConverter converter = new TokenAuthenticationConverter(xsuaaServiceConfiguration);

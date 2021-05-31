@@ -35,6 +35,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -42,6 +43,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,7 +54,7 @@ public class GTTService {
 	public static String SUCCESS = "Successfully created : ";
 	public static String FAILED = "Failed to create : ";
 
-	public static void PostSOAP(String xmlMessage, String appObjId) throws IOException {
+	public static GTTResponse PostSOAP(String xmlMessage, String appObjId) throws IOException {
 
 		String gtt_destination_name = System.getenv("GTT_DESTINATION");
 		Destination destObj = DestinationAccessor.getDestination(gtt_destination_name);
@@ -66,12 +68,28 @@ public class GTTService {
 		httpPost.setEntity(strEntity);
 		httpPost.setHeader("Content-type", "text/xml; charset=utf-8");
 		httpPost.setHeader("Authorization", "Basic " + Base64.encodeBase64String(credString.getBytes()));
+		
+		GTTResponse responseMessage = new GTTResponse();
+		try {
+			CloseableHttpResponse response = client.execute(httpPost);
 
-		CloseableHttpResponse response = client.execute(httpPost);
+			responseMessage.setMessage(response.getStatusLine().getStatusCode() == 200 ? SUCCESS+appObjId : FAILED+appObjId);
+			if (response.getEntity() != null) {
+				responseMessage.setResponseBody(EntityUtils.toString(response.getEntity()));
+			} else {
+				responseMessage.setResponseBody("");
+			}
+			responseMessage.setResponseCode(response.getStatusLine().getStatusCode());
+			
 
-		GTTResponseHelper messageHelper = new GTTResponseHelper();
-		messageHelper.createMessage(response, appObjId);
-		client.close();
+		} catch (ClientProtocolException e) {
+			// TODO: handle exception
+		} catch (IllegalStateException e) {
+
+		} catch (IOException e) {
+
+		}
+		return responseMessage;
 
 	}
 

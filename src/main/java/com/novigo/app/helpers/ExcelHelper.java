@@ -426,7 +426,14 @@ public class ExcelHelper {
 			edi_dc40Elems.forEach((key, value) -> {
 				try {
 					SOAPElement newNode = edi_dc40.addChildElement(key);
-					newNode.addTextNode(value);
+					if(key == "SNDPRN") {
+						String tempValue = applicationJson.getAPPSYS();
+						newNode.addTextNode(tempValue);
+					}
+					else {
+						newNode.addTextNode(value);
+					}
+					
 				} catch (SOAPException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

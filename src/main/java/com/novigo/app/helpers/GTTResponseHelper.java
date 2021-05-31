@@ -75,4 +75,9 @@ public class GTTResponseHelper {
 		GTTResponseWrapper messageObj = GTTResponseWrapper.getInstance();
 		return messageObj.getMessages();
 	}
+	
+	public static void clearMessages() {
+		GTTResponseWrapper messageObj = GTTResponseWrapper.getInstance();
+		messageObj.getMessages().clear();
+	}
 }

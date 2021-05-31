@@ -22,7 +22,6 @@ public class GTTResponseWrapper {
 
 	public GTTResponseWrapper(List<GTTResponse> messages) {
 		super();
-		messages.add(message);
 		this.messages = messages;
 	}
 
